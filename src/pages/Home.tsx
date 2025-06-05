@@ -1,39 +1,25 @@
-import FilmIcon from "../assets/icons/film-icon.svg";
-import GithubIcon from "../assets/icons/github-icon.svg";
+import Header from "../components/Header";
 
-function Header() {
+const Home: React.FC = () => {
     return (
-        <header className="flex h-15 w-full items-center justify-between text-white">
-            <div className="flex items-center space-x-1">
-                <img
-                    src={FilmIcon}
-                    alt="Film Icon"
-                    className="h-8 w-8 text-white"
-                />{" "}
-                <span className="text-xl">MovieFinder</span>
+        <div className="min-h-screen bg-primary-color">
+            <div className="container mx-auto max-w-6xl px-4 md:px-6">
+                <Header />
+
+                <main className="pt-16 pb-8" role="main">
+                    <section className="mx-auto max-w-4xl text-center text-white">
+                        <h1 className="text-4xl leading-tight font-bold md:text-5xl lg:text-6xl">
+                            Encontre os melhores filmes
+                        </h1>
+                        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-200 md:text-xl">
+                            Pesquise qualquer filme para descobrir informações
+                            detalhadas, classificações e muito mais.
+                        </p>
+                    </section>
+                </main>
             </div>
-            <a
-                href="https://github.com/epifaniofrancisco/moviefinder#"
-                target="_blank"
-                className="flex cursor-pointer items-center space-x-1 text-white hover:text-gray-300"
-            >
-                <img
-                    src={GithubIcon}
-                    alt="Github Icon"
-                    className="h-6 w-6"
-                />{" "}
-                <span className="hidden md:inline-block">Github</span>
-            </a>
-        </header>
+        </div>
     );
-}
-
-function Home() {
-    return (
-        <main className="h-screen px-4 md:px-6 bg-primary-color">
-            <Header />
-        </main>
-    );
-}
+};
 
 export default Home;
