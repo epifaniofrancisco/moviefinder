@@ -98,7 +98,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
                 <button
                     type="submit"
                     disabled={isDisabled}
-                    className="focus:ring-opacity-50 mx-auto w-48 rounded-lg bg-button-primary px-6 py-3 font-medium text-white shadow-sm transition-all duration-200 hover:bg-button-secondary focus:ring-2 focus:ring-button-secondary focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    className="focus:ring-opacity-50 mx-auto w-48 cursor-pointer rounded-lg bg-button-primary px-6 py-3 font-medium text-white shadow-sm transition-all duration-200 hover:bg-button-secondary focus:ring-2 focus:ring-button-secondary focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                     aria-label={
                         isLoading ? "Pesquisando..." : "Pesquisar filme"
                     }
