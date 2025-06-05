@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import HeroSection from "../components/HeroSection";
 import SearchForm from "../components/SearchForm";
@@ -19,6 +20,8 @@ const Home: React.FC = () => {
 
                     <SearchForm onSearch={searchMovie} />
                 </main>
+
+                <Footer />
             </div>
         </div>
     );
