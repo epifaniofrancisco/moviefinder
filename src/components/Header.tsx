@@ -1,20 +1,16 @@
-import FilmIcon from "../assets/icons/film-icon.svg";
+import { Film } from "lucide-react";
 import GithubIcon from "../assets/icons/github-icon.svg";
+import { NavLink } from "react-router";
 
 const Header: React.FC = () => {
     return (
         <header
             className="flex h-15 w-full items-center justify-between text-white"
         >
-            <div className="flex items-center space-x-2">
-                <img
-                    src={FilmIcon}
-                    alt="MovieFinder logo"
-                    className="h-8 w-8"
-                    loading="eager"
-                />
+            <NavLink to="/" className="flex items-center space-x-2">
+                <Film className="h-7 w-7" />
                 <h1 className="text-xl font-semibold">MovieFinder</h1>
-            </div>
+            </NavLink>
             <a
                 href="https://github.com/epifaniofrancisco/moviefinder"
                 target="_blank"
