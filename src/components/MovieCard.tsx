@@ -18,11 +18,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     return (
         <NavLink
             to={`/movie/${id}`}
-            className="group focus:ring-opacity-50 block rounded-xl transition-transform duration-200 hover:scale-[1.02] focus:ring-2 focus:ring-button-secondary focus:outline-none"
+            className="group block rounded-xl transition-transform duration-200 hover:scale-[1.02]"
             aria-label={`Ver detalhes do filme ${title} (${releaseYear})`}
         >
             <article className="h-full space-y-3 overflow-hidden rounded-xl bg-gradient-to-b from-[#540B16]/5 to-transparent">
-                <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-[#540B16]/30 bg-[#540B16]/20 transition-all duration-300 group-hover:border-button-secondary/60 group-hover:shadow-xl group-hover:shadow-button-secondary/10">
+                <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-[#540B16]/30 transition-all duration-300 group-hover:border-button-secondary/60 group-hover:shadow-xl group-hover:shadow-button-secondary/10">
                     <img
                         src={poster_path}
                         alt={`Poster do filme ${title}`}
@@ -30,7 +30,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                         loading="lazy"
                     />
 
-                    {/* Rating Badge */}
                     {hasRating && (
                         <div className="absolute top-1 right-1 flex items-center gap-1.5 rounded-lg border border-amber-400/20 bg-black/60 px-2 py-1 backdrop-blur-md">
                             <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
@@ -48,7 +47,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                     </div>
                 </div>
 
-                {/* Movie Info */}
                 <div className="space-y-2 px-2 py-1">
                     <h3 className="line-clamp-2 text-sm leading-tight font-bold text-white transition-colors duration-200 group-hover:text-button-secondary">
                         {title}
