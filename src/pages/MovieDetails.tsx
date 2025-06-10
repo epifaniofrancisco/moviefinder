@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Star, Calendar, Clock } from "lucide-react";
 import { formatRating, formatRuntime, formatYear } from "../utils";
+import { getMovieDetails } from "../services/tmdbApi";
 import LoadingSpinner from "../components/LoadingSpinner";
 import BackButton from "../components/BackButton";
 import MoviePoster from "../components/MoviePoster";
@@ -25,81 +26,6 @@ interface MovieDetails {
     vote_count: number;
 }
 
-// Simulated detailed movie data
-const mockMovieDetails: { [key: string]: MovieDetails } = {
-    "27205": {
-        id: 27205,
-        title: "Inception",
-        poster_path: "/placeholder.svg?height=750&width=500",
-        backdrop_path: "/placeholder.svg?height=720&width=1280",
-        release_date: "2010-07-15",
-        vote_average: 8.4,
-        runtime: 148,
-        overview:
-            "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
-        genres: [
-            { id: 28, name: "Action" },
-            { id: 878, name: "Science Fiction" },
-            { id: 12, name: "Adventure" },
-        ],
-        production_companies: [
-            { id: 923, name: "Legendary Pictures" },
-            { id: 9996, name: "Syncopy" },
-            { id: 174, name: "Warner Bros. Pictures" },
-        ],
-        budget: 160000000,
-        revenue: 836800000,
-        tagline: "Your mind is the scene of the crime.",
-        vote_count: 32541,
-    },
-    "155": {
-        id: 155,
-        title: "The Dark Knight",
-        poster_path: "/placeholder.svg?height=750&width=500",
-        backdrop_path: "/placeholder.svg?height=720&width=1280",
-        release_date: "2008-07-18",
-        vote_average: 9.0,
-        runtime: 152,
-        overview:
-            "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
-        genres: [
-            { id: 18, name: "Drama" },
-            { id: 28, name: "Action" },
-            { id: 80, name: "Crime" },
-            { id: 53, name: "Thriller" },
-        ],
-        production_companies: [
-            { id: 174, name: "Warner Bros. Pictures" },
-            { id: 923, name: "Legendary Pictures" },
-            { id: 9996, name: "Syncopy" },
-        ],
-        budget: 185000000,
-        revenue: 1004558444,
-        tagline: "Welcome to a world without rules.",
-        vote_count: 28567,
-    },
-    "278": {
-        id: 278,
-        title: "The Shawshank Redemption",
-        poster_path: "/placeholder.svg?height=750&width=500",
-        backdrop_path: "/placeholder.svg?height=720&width=1280",
-        release_date: "1994-09-23",
-        vote_average: 9.3,
-        runtime: 142,
-        overview:
-            "Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
-        genres: [
-            { id: 18, name: "Drama" },
-            { id: 80, name: "Crime" },
-        ],
-        production_companies: [{ id: 97, name: "Castle Rock Entertainment" }],
-        budget: 25000000,
-        revenue: 16000000,
-        tagline: "Fear can hold you prisoner. Hope can set you free.",
-        vote_count: 24869,
-    },
-};
-
 export default function MovieDetailsPage() {
     const params = useParams();
     const [movie, setMovie] = useState<MovieDetails | null>(null);
@@ -113,39 +39,9 @@ export default function MovieDetailsPage() {
             setLoading(true);
             setError("");
 
-            // Simulate API delay
-            await new Promise((resolve) => setTimeout(resolve, 500));
-
             try {
-                const movieData = mockMovieDetails[params.id as string];
-
-                if (movieData) {
-                    setMovie(movieData);
-                } else {
-                    // Create a basic movie object for IDs not in our mock data
-                    setMovie({
-                        id: Number(params.id),
-                        title: "Sample Movie",
-                        poster_path: "/placeholder.svg?height=750&width=500",
-                        backdrop_path: "/placeholder.svg?height=720&width=1280",
-                        release_date: "2023-01-01",
-                        vote_average: 7.5,
-                        runtime: 120,
-                        overview:
-                            "This is a sample movie description. In a real application, this would be fetched from the TMDB API with detailed information about the movie.",
-                        genres: [
-                            { id: 1, name: "Action" },
-                            { id: 2, name: "Adventure" },
-                        ],
-                        production_companies: [
-                            { id: 1, name: "Sample Studios" },
-                        ],
-                        budget: 50000000,
-                        revenue: 150000000,
-                        tagline: "An amazing cinematic experience.",
-                        vote_count: 1234,
-                    });
-                }
+                const movieData = await getMovieDetails(params.id);
+                setMovie(movieData);
             } catch (err) {
                 setError("Failed to load movie details. Please try again.");
                 console.error("Movie details error:", err);
@@ -167,7 +63,9 @@ export default function MovieDetailsPage() {
     };
 
     if (loading) {
-        return <LoadingSpinner message="Carregando detalhes do filme..." />;
+        return <div className="flex min-h-screen items-center justify-center bg-primary-color">
+            <LoadingSpinner message="Carregando detalhes do filme..." />;
+        </div>;
     }
 
     if (error || !movie) {

@@ -1,11 +1,12 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import HeroSection from "../components/HeroSection";
+import MovieResults from "../components/MovieResults";
 import SearchForm from "../components/SearchForm";
 import { useMovieSearch } from "../hooks/useMovieSearch";
 
 const Home: React.FC = () => {
-    const { searchMovie } = useMovieSearch();
+    const { searchMovie, movies, isSearching, error, hasSearched } = useMovieSearch();
 
     return (
         <div className="min-h-screen bg-primary-color">
@@ -19,6 +20,13 @@ const Home: React.FC = () => {
                     />
 
                     <SearchForm onSearch={searchMovie} />
+
+                    <MovieResults
+                        movies={movies}
+                        isLoading={isSearching}
+                        error={error}
+                        hasSearched={hasSearched}
+                    />
                 </main>
 
                 <Footer />
